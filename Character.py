@@ -4,7 +4,7 @@ class Character:
     def __init__(self, width, height):
         self.appearance = 'rectangle'
         self.state = None
-        self.position = np.array([width/2 - 21, height/2 - 21, width/2 + 1, height/2 + 1])
+        self.position = np.array([width/2 - 9, height/2 - 9, width/2 + 9, height/2 + 9])
         self.outline = "#FFFFFF"
 
     def move(self, command = [False, False, False, False]):
@@ -17,17 +17,25 @@ class Character:
             self.outline = "#FF0000" #빨강색상 코드!
 
             if command[0]:
-                self.position[1] -= 20
-                self.position[3] -= 20
+                if self.position[1] < 48:
+                    return
+                self.position[1] -= 16
+                self.position[3] -= 16
 
             elif command[1]:
-                self.position[1] += 20
-                self.position[3] += 20
+                if self.position[3] > 208:
+                    return
+                self.position[1] += 16
+                self.position[3] += 16
 
             elif command[2]:
-                self.position[0] -= 20
-                self.position[2] -= 20
+                if self.position[0] < 16:
+                    return
+                self.position[0] -= 16
+                self.position[2] -= 16
                 
             elif command[3]:
-                self.position[0] += 20
-                self.position[2] += 20
+                if self.position[2] > 224:
+                    return
+                self.position[0] += 16
+                self.position[2] += 16
