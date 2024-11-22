@@ -8,3 +8,6 @@ class Block:
         self.y = y
         self.position = np.array([x * 16 + 16, y * 16 + 48, (x + 1) * 16 + 16, (y + 1) * 16 + 48])
         self.fill = color
+    
+    def to_string(self):
+        return f"x = {self.x}, y = {self.y}, color = {self.fill}"
