@@ -20,6 +20,7 @@ def main():
     click_button = False
     restart_button = False
     restart = False
+    is_finish = False
     while True:
         if restart:
             gameManager.time_stop()
@@ -60,14 +61,14 @@ def main():
         my_draw.rectangle((0, 0, joystick.width, joystick.height), fill = (255, 255, 255, 100))
         if restart:
             my_draw.rectangle(tuple([40, 80, 200, 160]), fill="white", width=1, outline='#000000')
-            font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"  # 폰트 경로
+            font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
             font = ImageFont.truetype(font_path, 20)
             my_draw.text((70, 90), f"RESTART?", fill="black", font=font)
             my_draw.text((50, 130), f"A: Yes, B: No", fill="black", font=font)
         elif not gameManager.is_ending():
             draw_game(my_draw, gameManager, my_pos, blockManager)
         else:
-            draw_finish(my_draw, gameManager)
+            is_finish = draw_finish(my_draw, gameManager, is_finish)
         joystick.disp.image(my_image)
 
 
@@ -82,32 +83,44 @@ def draw_game(my_draw, gameManager, my_pos, blockManager):
     my_draw.rectangle(tuple([224, 0, 240, 240]), fill="white", width=1, outline='#000000')
     my_draw.rectangle(tuple([0, 0, 240, 48]), fill="white", width=1, outline='#000000')
     my_draw.rectangle(tuple([0, 208, 240, 240]), fill="white", width=1, outline='#000000')
-    font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"  # 폰트 경로
-    font_size = 30  # 폰트 크기
+    font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+    font_size = 30
     font = ImageFont.truetype(font_path, font_size)
     my_draw.text((10, 10), f"Time: {gameManager.time_check()}", fill="black", font=font)
     my_draw.text((10, 210), f"Block: {gameManager.block_check()}", fill="black", font=font)
     # 블록 그리기
-    for row in blockManager.blocks:  # 각 행(row)을 순회
-        for block in row:  # 각 블록(block)을 순회
-            if block:  # 블록이 None이 아닌 경우만 처리
+    for row in blockManager.blocks:
+        for block in row:
+            if block:
                 my_draw.rectangle(tuple(block.position), fill=block.fill, outline='#000000')
     my_draw.ellipse(tuple(my_pos.position), fill="black", outline=my_pos.outline)
+    for block in blockManager.break_block:
+        my_draw.line(((my_pos.position[0] + my_pos.position[2]) / 2,
+                      (my_pos.position[1] + my_pos.position[3]) / 2,
+                      (block.position[0] + block.position[2]) / 2,
+                      (block.position[1] + block.position[3]) / 2
+                      ), fill="black", width=5)
+        my_draw.rectangle(tuple(block.position), fill=block.fill, outline='#000000')
+        block.remove_block()
+        if block.position[0] >= block.position[2]:
+            blockManager.break_block.clear()
 
-def draw_finish(my_draw, gameManager):
-    gameManager.finish = 90 - gameManager.time_check()
-    font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"  # 폰트 경로
-    font_size = 30  # 폰트 크기
+def draw_finish(my_draw, gameManager, is_finish):
+    if not is_finish:
+        gameManager.finish = 90 - gameManager.time_check()
+    font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+    font_size = 30
     font = ImageFont.truetype(font_path, font_size)
     if gameManager.block_check() == 100:
         my_draw.text((70, 100), f"CLEAR", fill="black", font=font)
-        my_draw.text((110, 140), f"{gameManager.finish}", fill="black", font=font)
+        my_draw.text((30, 140), f"{gameManager.finish} Second", fill="black", font=font)
     else:
         my_draw.text((20, 100), f"GAME OVER", fill="black", font=font)
         if gameManager.block_check() < 10:
             my_draw.text((110, 140), f"{gameManager.block_check()}", fill="black", font=font)
         elif gameManager.block_check() < 100:
             my_draw.text((100, 140), f"{gameManager.block_check()}", fill="black", font=font)
+    return True
 
 if __name__ == '__main__':
     main()

@@ -4,6 +4,7 @@ import random
 class BlockManager:
     def __init__(self):
         self.blocks = [[None for _ in range(10)] for _ in range(13)]
+        self.break_block = []
         self.block_count = 0
         self.make_map()
 
@@ -69,30 +70,40 @@ class BlockManager:
             for i in range(0, 4):
                 if directions[i].fill == "red":
                     self.blocks[directions[i].x][directions[i].y].fill = "white"
+                    directions[i].fill = "black"
+                    self.break_block.append(directions[i])
                     gameManager.block_count += 1
                     check = False
         if colors[1] >= 2:
             for i in range(0, 4):
                 if directions[i].fill == "green":
                     self.blocks[directions[i].x][directions[i].y].fill = "white"
+                    directions[i].fill = "black"
+                    self.break_block.append(directions[i])
                     gameManager.block_count += 1
                     check = False
         if colors[2] >= 2:
             for i in range(0, 4):
                 if directions[i].fill == "blue":
                     self.blocks[directions[i].x][directions[i].y].fill = "white"
+                    directions[i].fill = "black"
+                    self.break_block.append(directions[i])
                     gameManager.block_count += 1
                     check = False
         if colors[3] >= 2:
             for i in range(0, 4):
                 if directions[i].fill == "orange":
                     self.blocks[directions[i].x][directions[i].y].fill = "white"
+                    directions[i].fill = "black"
+                    self.break_block.append(directions[i])
                     gameManager.block_count += 1
                     check = False
         if colors[4] >= 2:
             for i in range(0, 4):
                 if directions[i].fill == "pink":
                     self.blocks[directions[i].x][directions[i].y].fill = "white"
+                    directions[i].fill = "black"
+                    self.break_block.append(directions[i])
                     gameManager.block_count += 1
                     check = False
         if check:
@@ -108,7 +119,7 @@ class BlockManager:
             cur = x
             while cur >= 0 and cur <= 12:
                 if self.blocks[cur][y].fill != "white":
-                    return self.blocks[cur][y]
+                    return Block(cur, y, self.blocks[cur][y].fill)
                 else:
                     cur += offset
         else:
@@ -119,7 +130,7 @@ class BlockManager:
             cur = y
             while cur >= 0 and cur <= 9:
                 if self.blocks[x][cur].fill != "white":
-                    return self.blocks[x][cur]
+                    return Block(x, cur, self.blocks[x][cur].fill)
                 else:
                     cur += offset
         return Block(-1, -1, "blank")

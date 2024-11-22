@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 
 class Block:
     def __init__(self, x, y, color):
@@ -11,3 +12,10 @@ class Block:
     
     def to_string(self):
         return f"x = {self.x}, y = {self.y}, color = {self.fill}"
+    
+
+    def remove_block(self):
+        self.position[0] += 2
+        self.position[1] += 2
+        self.position[2] -= 2
+        self.position[3] -= 2
