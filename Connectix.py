@@ -128,14 +128,14 @@ def draw_finish(my_draw, gameManager, is_finish):
     font_size = 30
     font = ImageFont.truetype(font_path, font_size)
     if gameManager.block_check() == 100:
-        my_draw.text((70, 100), f"CLEAR", fill="black", font=font)
-        my_draw.text((30, 140), f"{gameManager.finish} Second", fill="black", font=font)
+        my_draw.text((70, 80), f"CLEAR", fill="black", font=font)
+        my_draw.text((30, 120), f"{gameManager.finish} Second", fill="black", font=font)
     else:
-        my_draw.text((20, 100), f"GAME OVER", fill="black", font=font)
+        my_draw.text((20, 80), f"GAME OVER", fill="black", font=font)
         if gameManager.block_check() < 10:
-            my_draw.text((110, 140), f"{gameManager.block_check()}", fill="black", font=font)
+            my_draw.text((110, 120), f"{gameManager.block_check()}", fill="black", font=font)
         elif gameManager.block_check() < 100:
-            my_draw.text((100, 140), f"{gameManager.block_check()}", fill="black", font=font)
+            my_draw.text((100, 120), f"{gameManager.block_check()}", fill="black", font=font)
     return True
 
 if __name__ == '__main__':
