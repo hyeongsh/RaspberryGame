@@ -63,6 +63,7 @@ class BlockManager:
         print(f"bot: {directions[2].to_string()}")
         print(f"left: {directions[1].to_string()}")
         print(f"right: {directions[0].to_string()}")
+        print(f"r: {colors[0]} g: {colors[1]} b: {colors[2]} o: {colors[3]} p: {colors[4]} x: {colors[5]}")
         print("")
 
         check = True
@@ -137,7 +138,9 @@ class BlockManager:
         
 
     def check_colors(self, x, y):
-        if self.blocks[x][y].fill == "red":
+        if (x == -1 and y == -1):
+            return 5
+        elif self.blocks[x][y].fill == "red":
             return 0
         elif self.blocks[x][y].fill == "green":
             return 1

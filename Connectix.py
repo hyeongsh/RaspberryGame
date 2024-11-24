@@ -93,6 +93,22 @@ def draw_game(my_draw, gameManager, my_pos, blockManager):
         for block in row:
             if block:
                 my_draw.rectangle(tuple(block.position), fill=block.fill, outline='#000000')
+                if block.fill == "red":
+                    my_draw.ellipse(tuple(block.circle), fill=block.adjust_fill(), outline='#000000')
+                if block.fill == "green":
+                    my_draw.rectangle(tuple(block.rect), fill=block.adjust_fill(), outline='#000000')
+                if block.fill == "blue":
+                    x1, y1, x2, y2 = block.rect
+                    my_draw.polygon([((x1 + x2) // 2, y1), (x2, (y1 + y2) // 2), 
+                                     ((x1 + x2) // 2, y2), (x1, (y1 + y2) // 2)], fill=block.adjust_fill(), outline='#000000')
+                if block.fill == "orange":
+                    x1, y1, x2, y2 = block.rect
+                    mid_x = (x1 + x2) / 2
+                    mid_y = (y1 + y2) / 2
+                    my_draw.polygon([(x1, y1), ((x1 + x2) // 2, y2), (x2, y1)], fill=block.adjust_fill(), outline='#000000')
+                if block.fill == "pink":
+                    x1, y1, x2, y2 = block.rect
+                    my_draw.polygon([(x1, y2), ((x1 + x2) / 2, y1), (x2, y2)], fill=block.adjust_fill(), outline='#000000')
     my_draw.ellipse(tuple(my_pos.position), fill="black", outline=my_pos.outline)
     for block in blockManager.break_block:
         my_draw.line(((my_pos.position[0] + my_pos.position[2]) / 2,
