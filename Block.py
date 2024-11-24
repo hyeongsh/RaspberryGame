@@ -8,8 +8,7 @@ class Block:
         self.x = x
         self.y = y
         self.position = np.array([x * 16 + 16, y * 16 + 48, (x + 1) * 16 + 16, (y + 1) * 16 + 48])
-        self.rect = np.array([x * 16 + 21, y * 16 + 53, (x + 1) * 16 + 11, (y + 1) * 16 + 43])
-        self.circle = np.array([x * 16 + 21, y * 16 + 53, (x + 1) * 16 + 11, (y + 1) * 16 + 43])
+        self.pattern = np.array([x * 16 + 21, y * 16 + 53, (x + 1) * 16 + 11, (y + 1) * 16 + 43])
         self.fill = color
     
     def to_string(self):
