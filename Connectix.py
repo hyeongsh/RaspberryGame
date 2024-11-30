@@ -29,8 +29,10 @@ def main():
 				flag = draw_finish(my_draw, joystick, gameManager)
 			case 4:
 				break
-			
 		joystick.disp.image(my_image)
+	my_draw.rectangle((0, 0, joystick.width, joystick.height), fill = (0, 0, 0, 0))	
+	joystick.disp.image(my_image)
+	
 
 
 def draw_main(my_draw, joystick, gameManager, blockManager, my_pos):
@@ -50,11 +52,13 @@ def draw_main(my_draw, joystick, gameManager, blockManager, my_pos):
 		gameManager.level -= 1
 	if joystick.check_button_D() and gameManager.level < 4:  # down pressed
 		gameManager.level += 1
-	if joystick.check_button_A() and gameManager.level != 4:
-		gameManager.start_game(blockManager, my_pos)
-		return 1
 	if joystick.check_button_A():
-		return 4
+		if gameManager.level != 4:
+			gameManager.start_game(blockManager, my_pos)
+			return 1
+		else:
+			return 4
+	
 	my_draw.rectangle(tuple([40, 30 + ((gameManager.level - 1) * 45), 200, 70 + ((gameManager.level - 1) * 45)]), width=3, outline='red')
 	return 0
 
