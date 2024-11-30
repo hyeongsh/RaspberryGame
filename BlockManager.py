@@ -6,41 +6,42 @@ class BlockManager:
         self.blocks = [[None for _ in range(10)] for _ in range(13)]
         self.break_block = []
         self.block_count = 0
-        self.make_map()
 
-    def make_map(self):
+    def make_map(self, level):
         self.blocks = [[None for _ in range(10)] for _ in range(13)]
-        red = 20
-        green = 20
-        blue = 20
-        orange = 20
-        pink = 20
-        blank = 30
+        level_block = 20 - ((3 - level) * 6)
+        red = level_block
+        green = level_block
+        blue = level_block
+        orange = level_block
+        pink = level_block
+        blank = 130 - (level_block * 5)
+        tmp = [0, 0, 0, 0, 0, 0]
         for i in range(0, 13):
             for j in range(0, 10):
                 while True:
-                    random_number = random.randint(0, 5)
-                    if random_number == 0 and red != 0:
+                    random_number = random.randint(0, 130)
+                    if random_number < level_block and red != 0:
                         red -= 1
                         self.blocks[i][j] = Block(i, j, "red")
                         break
-                    elif random_number == 1 and green != 0:
+                    elif random_number < level_block * 2 and green != 0:
                         green -= 1
                         self.blocks[i][j] = Block(i, j, "green")
                         break
-                    elif random_number == 2 and blue != 0:
+                    elif random_number < level_block * 3 and blue != 0:
                         blue -= 1
                         self.blocks[i][j] = Block(i, j, "blue")
                         break
-                    elif random_number == 3 and orange != 0:
+                    elif random_number < level_block * 4 and orange != 0:
                         orange -= 1
                         self.blocks[i][j] = Block(i, j, "orange")
                         break
-                    elif random_number == 4 and pink != 0:
+                    elif random_number < level_block * 5 and pink != 0:
                         pink -= 1
                         self.blocks[i][j] = Block(i, j, "pink")
                         break
-                    elif random_number == 5 and blank != 0:
+                    elif random_number >= level_block * 5 and blank != 0:
                         blank -= 1
                         self.blocks[i][j] = Block(i, j, "white")
                         break
