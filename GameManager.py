@@ -7,6 +7,7 @@ class GameManager:
 		self.level = 1
 		self.start_time = time.time()
 		self.stop_time = 0
+		self.check_stop = 0
 		self.offset = 0
 		self.end_time = self.start_time + 90
 		self.finish = 0
@@ -15,6 +16,7 @@ class GameManager:
 	def start_game(self, blockManager, my_pos):
 		self.start_time = time.time()
 		self.stop_time = 0
+		self.check_stop = 0
 		self.offset = 0
 		self.end_time = self.start_time + 90
 		self.finish = 0
@@ -24,7 +26,10 @@ class GameManager:
 	
 	def time_stop(self):
 		cur_time = time.time()
-		self.offset = int(cur_time - self.stop_time)
+		self.check_stop = int(cur_time - self.stop_time)
+
+	def time_restart(self):
+		self.offset += self.check_stop
 
 	def time_check(self):
 		cur_time = time.time()

@@ -64,6 +64,7 @@ def draw_main(my_draw, joystick, gameManager, blockManager, my_pos):
 
 def draw_game(my_draw, joystick, gameManager, blockManager, my_pos):
 	if gameManager.is_ending():
+		blockManager.break_block.clear()
 		return 3
 	if joystick.check_button_U() and my_pos.y != 0:
 		my_pos.y -= 1
@@ -134,6 +135,7 @@ def draw_menu(my_draw, joystick, gameManager):
 		gameManager.level = 1
 		return 0
 	if joystick.check_button_B():
+		gameManager.time_restart()
 		return 1
 		
 	my_draw.rectangle(tuple([40, 80, 200, 160]), fill="white", width=1, outline='#000000')
